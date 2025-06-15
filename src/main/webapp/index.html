@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Manager</title>
+    <link rel="stylesheet" href="app.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div id="loginSection" class="login-container">
+    <div class="decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </div>
+
+    <div class="login-card">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h1>Admin Portal</h1>
+        </div>
+
+        <form id="loginForm" class="login-form">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" required>
+                <label for="username">Username</label>
+                <div class="underline"></div>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+                <div class="underline"></div>
+            </div>
+            <button type="submit" class="login-btn">
+                <span>Sign In</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div id="loginError" class="error-message"></div>
+        </form>
+    </div>
+</div>
+<div id="dashboardSection" class="dashboard-container">
+    <header class="dashboard-header">
+        <div class="header-left">
+            <h1>
+                <i class="fas fa-chart-network"></i>
+                Subscription Manager
+            </h1>
+        </div>
+        <div class="header-right">
+            <div class="user-profile">
+                <span id="loggedInUser"></span>
+                <button id="themeToggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total</h3>
+                    <p id="totalSubscriptions">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Lite</h3>
+                    <p id="liteCount">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Basic</h3>
+                    <p id="basicCount">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Super</h3>
+                    <p id="superCount">0</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-pie"></i> Subscription Distribution</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="subscriptionChart"></canvas>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <section class="subscriptions-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Subscriptions</h2>
+                    <div class="actions-section">
+                        <button id="fetchSubscriptionsButton" class="refresh-btn">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh Data
+                        </button>
+                        <div class="search-container">
+                            <input type="text" id="filterInput" placeholder="Search subscriptions...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="subscriptions" class="subscriptions-container">
+                    <div class="loader">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Loading subscriptions...
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-edit"></i> Add/Edit Subscription</h2>
+                </div>
+                <form id="subscriptionRegistration" class="subscription-form">
+                    <div id="editBanner" class="edit-banner">
+                        <i class="fas fa-info-circle"></i>
+                        Editing subscription. Submit to save changes or cancel to reset.
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstname" required>
+                            </div>
+                            <span class="validation-message" id="firstname-validation"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastname" required>
+                            </div>
+                            <span class="validation-message" id="lastname-validation"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" required>
+                            </div>
+                            <span class="validation-message" id="email-validation"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phonenumber">Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phonenumber" required>
+                            </div>
+                            <span class="validation-message" id="phonenumber-validation"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Subscription Type</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="subscription" value="lite">
+                                    <span class="radio-checkmark"></span>
+                                    <span>Lite <i class="fas fa-bolt"></i></span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="subscription" value="basic">
+                                    <span class="radio-checkmark"></span>
+                                    <span>Basic <i class="fas fa-layer-group"></i></span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="subscription" value="super">
+                                    <span class="radio-checkmark"></span>
+                                    <span>Super <i class="fas fa-crown"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Channels</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="services" value="ufc">
+                                    <span class="checkbox-checkmark"></span>
+                                    <span>UFC <i class="fas fa-boxing-glove"></i></span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="services" value="hbo">
+                                    <span class="checkbox-checkmark"></span>
+                                    <span>HBO <i class="fas fa-tv"></i></span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="services" value="netflix">
+                                    <span class="checkbox-checkmark"></span>
+                                    <span>Netflix <i class="fas fa-film"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Register
+                        </button>
+                        <button type="button" id="cancelEditBtn" class="cancel-btn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- User Management Section -->
+        <section class="user-management-section">
+            <div class="section-header">
+                <h2><i class="fas fa-user-cog"></i> User Management</h2>
+            </div>
+            <div id="userManagement" class="subscriptions-container">
+                <div class="loader">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading user data...
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
