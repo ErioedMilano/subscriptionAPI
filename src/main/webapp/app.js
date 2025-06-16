@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let subscriptionChart = null;
     let isDarkMode = localStorage.getItem('darkMode') === 'true';
 
-    // Apply theme on load
+    // Apply theme on a load
     applyTheme();
 
     // Theme toggle event

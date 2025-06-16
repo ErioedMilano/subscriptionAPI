@@ -21,7 +21,7 @@ public class SubscriptionConfig{
         // Configure Jersey
         ResourceConfig config = new ResourceConfig();
         config.register(JacksonFeature.class); // Register Jackson for JSON support
-        config.packages("sr.unasat.subscription.api.controllers"); // Replace with your package name
+        config.packages("sr.unasat.subscription.api.controllers"); // Replace it with your package name
 
         // Add the Jersey ServletContainer to the context
         ServletHolder jerseyServlet = new ServletHolder(new ServletContainer(config));
