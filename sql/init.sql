@@ -1,30 +1,26 @@
--- Create the database
-CREATE DATABASE IF NOT EXISTS subscription_manager;
-USE subscription_manager;
+CREATE DATABASE IF NOT EXISTS subscription_db;
+USE subscription_db;
 
-
-
--- Create the subscriptions table
+-- Tabel voor subscriptions
 CREATE TABLE IF NOT EXISTS subscriptions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    firstname VARCHAR(100) NOT NULL,
-    lastname VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    phonenumber VARCHAR(50) NOT NULL,
-    subscription VARCHAR(50),
-    services VARCHAR(255)
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phonenumber VARCHAR(20) NOT NULL,
+    subscription VARCHAR(20),
+    services VARCHAR(255),
+    status ENUM('Pending', 'Active', 'Inactive') NOT NULL DEFAULT 'Pending'
 );
 
+-- Tabel voor gebruikers
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
-    role VARCHAR(20) NOT NULL DEFAULT 'user'
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL
 );
 
-
-
--- Insert admin user (password: admin0000)
+-- Standaard admin gebruiker toevoegen
 INSERT INTO users (username, password, role)
-VALUES ('admin', 'admin0000', 'admin');
-
+VALUES ('admin', '12345678', 'ADMIN');

@@ -7,7 +7,7 @@
         <class>sr.unasat.subscription.api.entity.Subscription</class>
         <properties>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/subscription_manager?useUnicode=true;characterEncoding=UTF-8;useSSL=false;verifyServerCertificate=false;"/>
+                      value="jdbc:mysql://localhost:3306/subscription_db?useUnicode=true;characterEncoding=UTF-8;useSSL=false;verifyServerCertificate=false;"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="12345678"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
